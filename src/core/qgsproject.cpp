@@ -782,7 +782,7 @@ bool QgsProject::addLayer( const QDomElement &layerElem, QList<QDomNode> &broken
 
 bool QgsProject::read( const QString &filename )
 {
-  mFile.setFileName( filename );
+  mFile.setFileName( QFileInfo( filename ).canonicalFilePath() );
 
   return read();
 }
@@ -808,7 +808,7 @@ bool QgsProject::read()
 
 bool QgsProject::readProjectFile( const QString &filename )
 {
-  QFile projectFile( filename );
+  QFile projectFile( QFileInfo( filename ).canonicalFilePath() );
   clearError();
 
   std::unique_ptr<QDomDocument> doc( new QDomDocument( QStringLiteral( "qgis" ) ) );
