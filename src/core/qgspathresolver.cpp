@@ -147,7 +147,7 @@ QString QgsPathResolver::writePath( const QString &src ) const
   }
 
   QFileInfo pfi( mBaseFileName );
-  QString projPath = pfi.absoluteFilePath();
+  QString projPath = pfi.canonicalFilePath();
 
   if ( projPath.isEmpty() )
   {
@@ -185,7 +185,7 @@ QString QgsPathResolver::writePath( const QString &src ) const
   const Qt::CaseSensitivity cs = Qt::CaseSensitive;
 #endif
 
-  QStringList projElems = mBaseFileName.split( '/', QString::SkipEmptyParts );
+  QStringList projElems = projPath.split( '/', QString::SkipEmptyParts );
   QStringList srcElems = srcPath.split( '/', QString::SkipEmptyParts );
 
   // remove project file element
