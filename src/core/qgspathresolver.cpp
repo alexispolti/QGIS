@@ -146,7 +146,8 @@ QString QgsPathResolver::writePath( const QString &src ) const
     return src;
   }
 
-  QFileInfo pfi( mBaseFileName );
+  // Get projPath even if project has not been created yet
+  QFileInfo pfi( QFileInfo( mBaseFileName ).path() );
   QString projPath = pfi.canonicalFilePath();
 
   if ( projPath.isEmpty() )
@@ -188,9 +189,6 @@ QString QgsPathResolver::writePath( const QString &src ) const
   QStringList projElems = projPath.split( '/', QString::SkipEmptyParts );
   QStringList srcElems = srcPath.split( '/', QString::SkipEmptyParts );
 
-  // remove project file element
-  projElems.removeLast();
-
   projElems.removeAll( QStringLiteral( "." ) );
   srcElems.removeAll( QStringLiteral( "." ) );
 
@@ -207,7 +205,7 @@ QString QgsPathResolver::writePath( const QString &src ) const
 
   if ( n == 0 )
   {
-    // no common parts; might not even by a file
+    // no common parts; might not even be a file
     return src;
   }
 
